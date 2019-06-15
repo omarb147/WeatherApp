@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import SearchBar from "./Search/SearchBar";
 import { dailyWeatherByLocation } from "../services/weatherApi";
+import WeatherDisplay from "./Weather/WeatherDisplay";
+import "../weather-icons-master/css/weather-icons.css";
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +14,9 @@ class App extends Component {
     event.preventDefault();
     //TODO - IMPLEMENT ERROR HANDLING
     const forecastData = await dailyWeatherByLocation(value);
+
     this.setState({
-      dailyForecast: forecastData.list,
+      dailyForecast: forecastData.list.slice(0, 5),
       country: forecastData.city.country,
       location: forecastData.city.name
     });
@@ -24,6 +27,10 @@ class App extends Component {
     return (
       <div className="ui container">
         <SearchBar onInputSubmit={this.onInputSubmit} />
+        <WeatherDisplay
+          forecastData={this.state.dailyForecast}
+          location={this.state.location}
+        />
       </div>
     );
   }
