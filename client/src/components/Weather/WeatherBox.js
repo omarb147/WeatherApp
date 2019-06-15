@@ -1,10 +1,12 @@
 import React from "react";
-import image from "../../download.png";
 import moment from "moment";
 
 const WeatherBox = props => {
   return (
-    <div className="column">
+    <div
+      className="column"
+      onClick={event => props.onDateSelect(event, props.date)}
+    >
       <div className="ui segment">
         <div class="ui top left attached label">
           {moment.unix(props.date).format("MMM Do")}

@@ -6,7 +6,6 @@ const WeatherDisplay = props => {
   let weatherBoxes;
   if (props.location) {
     weatherBoxes = renderDailyForecast(props);
-    console.log(weatherBoxes);
   } else {
     weatherBoxes = "";
   }
@@ -15,7 +14,7 @@ const WeatherDisplay = props => {
 };
 
 const renderDailyForecast = props => {
-  return props.forecastData.map(forecast => {
+  return props.dailyWeatherForecast.map(forecast => {
     return (
       <WeatherBox
         date={forecast.dt}
@@ -23,6 +22,7 @@ const renderDailyForecast = props => {
         minTemp={kelvinToDegrees(forecast.temp.min)}
         description={forecast.weather[0].description}
         weatherID={forecast.weather[0].id}
+        onDateSelect={props.onDateSelect}
       />
     );
   });

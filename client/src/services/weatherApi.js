@@ -5,9 +5,9 @@ const WeatherAPI = axios.create({
   baseURL: config.WEATHER_API_BASE_URL
 });
 
-export const dailyWeatherByLocation = async location => {
+export const weatherByLocation = async (location, period) => {
   const res = await WeatherAPI(
-    `/daily?q=${location}&APPID=${config.WEATHER_API_KEY}`
+    `/${period}?q=${location}&APPID=${config.WEATHER_API_KEY}`
   );
   console.log(res);
   return res.data;
