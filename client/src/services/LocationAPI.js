@@ -1,10 +1,7 @@
 import axios from "axios";
 import * as CONFIG from "../Config";
 
-export const autocompleteAPI = async query => {
-  //1.Parse query for link
-  //2.Set up API call
-  //3. Handle errors
+export const autocompleteAPI = async (query, callback) => {
   const escapedQuery = query.split(" ").join("+");
 
   try {
@@ -12,12 +9,11 @@ export const autocompleteAPI = async query => {
       params: {
         app_id: CONFIG.DEVELOPER_HERE_APP_ID,
         app_code: CONFIG.DEVELOPER_HERE_APP_CODE,
-        resultType: "areas"
+        maxresults: 10
       }
     });
-
-    console.log(res);
+    return callback(res.data.suggestions, null);
   } catch (error) {
-    console.log(error);
+    return callback(null, error);
   }
 };

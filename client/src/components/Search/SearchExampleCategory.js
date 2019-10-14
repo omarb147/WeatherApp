@@ -1,76 +1,42 @@
 import _ from "lodash";
-import faker from "faker";
 import React, { Component } from "react";
 import { Search, Grid, Header, Segment } from "semantic-ui-react";
 import { withRedux } from "../../Redux";
+import * as TYPES from "../../Constants/Types";
 
-const initialState = { isLoading: false, results: [], value: "" };
+const initialState = { isLoading: false, value: "", results: [] };
 
-const getResults = () =>
-  _.times(5, () => ({
-    title: faker.company.companyName()
-  }));
-
-const source = _.range(0, 3).reduce(memo => {
-  const name = faker.hacker.noun();
-
-  // eslint-disable-next-line no-param-reassign
-  memo[name] = {
-    name,
-    results: getResults()
-  };
-  console.log(memo);
-
-  return memo;
-}, {});
 class SearchBar extends Component {
   state = initialState;
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title });
+  handleResultSelect = (e, { result }) => {
+    const { district, country_code, description } = result;
+    this.setState({ value: description });
+    this.props.getWeatherByLocation({ district, country_code }, TYPES.DAILY);
+  };
 
   handleSearchChange = (e, { value }) => {
-    this.setState({ isLoading: true, value });
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.setState(initialState);
-
-      const re = new RegExp(_.escapeRegExp(this.state.value), "i");
-      const isMatch = result => re.test(result.title);
-
-      const filteredResults = _.reduce(
-        source,
-        (memo, data, name) => {
-          const results = _.filter(data.results, isMatch);
-          if (results.length) memo[name] = { name, results }; // eslint-disable-line no-param-reassign
-
-          return memo;
-        },
-        {}
-      );
-
-      this.setState({
-        isLoading: false,
-        results: filteredResults
-      });
-    }, 300);
+    this.setState({ value });
+    this.props.getSearchSuggestions(value);
   };
 
   render() {
-    const { isLoading, value, results } = this.state;
+    const { value, results } = this.state;
+    const { data } = this.props.searchSuggestions;
 
     return (
       <Grid>
         <Grid.Column width={8}>
           <Search
             category
-            loading={isLoading}
+            loading={this.props.searchSuggestions.loading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {
               leading: true
             })}
-            results={results}
+            minCharacters={4}
+            results={data}
             value={value}
-            {...this.props}
           />
         </Grid.Column>
       </Grid>

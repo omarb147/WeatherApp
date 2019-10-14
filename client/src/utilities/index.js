@@ -1,3 +1,4 @@
 import { formatDailyWeatherData, formatHourlyWeatherData } from "./formatWeatherData";
+import { formatSuggestionData } from "./formatSuggetionData";
 
-export { formatDailyWeatherData, formatHourlyWeatherData };
+export { formatDailyWeatherData, formatHourlyWeatherData, formatSuggestionData };

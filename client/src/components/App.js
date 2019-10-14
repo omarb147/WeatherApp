@@ -11,10 +11,7 @@ import { autocompleteAPI } from "../services/LocationAPI";
 import moment from "moment";
 
 class App extends Component {
-  componentDidMount() {
-    this.props.getWeatherByLocation("London", TYPES.DAILY);
-    console.log(autocompleteAPI("croydon"));
-  }
+  componentDidMount() {}
   // onDateSelect = (event, date) => {
   //   //1 find out which date is selected
   //   this.setState({ selectedDate: date });

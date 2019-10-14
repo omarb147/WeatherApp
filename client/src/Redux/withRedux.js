@@ -19,13 +19,15 @@ const mapStateToProps = state => {
     city: state.weatherAPI.city,
     country: state.weatherAPI.country,
     dailyForecast: state.weatherAPI.daily,
-    hourlyForecast: state.weatherAPI.hourly
+    hourlyForecast: state.weatherAPI.hourly,
+    searchSuggestions: state.search.suggestions
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getWeatherByLocation: (city, period) => dispatch(ACTION.getWeatherByLocation(city, period))
+    getWeatherByLocation: (city, period) => dispatch(ACTION.getWeatherByLocation(city, period)),
+    getSearchSuggestions: query => dispatch(ACTION.getAutocompleteSuggestions(query))
   };
 };
 
