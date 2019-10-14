@@ -1,5 +1,5 @@
 import React from "react";
-import WeatherBox from "./WeatherBox";
+import WeatherBox from "./DailyWeatherBox";
 import { kelvinToDegrees } from "../../utilities/weatherFunctions";
 
 const WeatherDisplay = props => {

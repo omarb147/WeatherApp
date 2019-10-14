@@ -1,14 +1,15 @@
 import axios from "axios";
-import config from "../Config/keys";
+import * as CONFIG from "../Config";
 
 const WeatherAPI = axios.create({
-  baseURL: config.WEATHER_API_BASE_URL
+  baseURL: CONFIG.WEATHER_API_BASE_URL
 });
 
-export const weatherByLocation = async (location, period) => {
-  const res = await WeatherAPI(
-    `/${period}?q=${location}&APPID=${config.WEATHER_API_KEY}`
-  );
-  console.log(res);
-  return res.data;
+export const getWeatherAPI = async (location, period, callback) => {
+  try {
+    const res = await WeatherAPI(`/${period}?q=${location}&APPID=${CONFIG.WEATHER_API_KEY}`);
+    if (res) return callback(res.data, null);
+  } catch (error) {
+    return callback(null, error);
+  }
 };

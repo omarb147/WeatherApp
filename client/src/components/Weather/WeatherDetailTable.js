@@ -1,45 +1,43 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import moment from "moment";
 import { kelvinToDegrees } from "../../utilities/weatherFunctions";
 
-const WeatherDetail = props => {
-  if (props.location) {
-    const timeList = listOfTimesToRender(props);
+class WeatherDetail extends Component {
+  render() {
+    const { selectedDate } = this.props;
+
     return (
-      <div className="ui segment">
-        <table className="ui very basic celled table">
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Weather</th>
-              <th>Description</th>
-              <th>High Temp</th>
-              <th>Low Temp</th>
-            </tr>
-          </thead>
-          <tbody>{renderTableRows(timeList)}</tbody>
-        </table>
-      </div>
+      <>
+        {selectedDate && (
+          <div className="ui segment">
+            <table className="ui very basic celled table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Weather</th>
+                  <th>Description</th>
+                  <th>High Temp</th>
+                  <th>Low Temp</th>
+                </tr>
+              </thead>
+              <tbody>{}</tbody>
+            </table>
+          </div>
+        )}
+      </>
     );
-  } else {
-    return null;
   }
-};
+}
 
 const WeatherTableRow = props => {
   return (
     <Fragment>
       <tr>
         <td className="collapsing">
-          <h4 className="ui image header">{`${props.timeFrom} - ${
-            props.timeTo
-          }`}</h4>
+          <h4 className="ui image header">{`${props.timeFrom} - ${props.timeTo}`}</h4>
         </td>
         <td>
-          <i
-            className={`wi wi-owm-${props.tempID}`}
-            style={{ fontSize: "30pt" }}
-          />
+          <i className={`wi wi-owm-${props.tempID}`} style={{ fontSize: "30pt" }} />
         </td>
         <td>{props.description}</td>
         <td>{props.maxTemp}</td>
