@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from "react";
 import moment from "moment";
-import { kelvinToDegrees } from "../../utilities/weatherFunctions";
+import { formatKelvinToDegrees } from "../../utilities/formatUnits";
 
 class WeatherDetail extends Component {
   render() {
@@ -68,8 +68,8 @@ function renderTableRows(list) {
       <WeatherTableRow
         timeFrom={timeFrom.format("HH:mm")}
         timeTo={timeTo.format("HH:mm")}
-        maxTemp={kelvinToDegrees(element.main.temp_max)}
-        minTemp={kelvinToDegrees(element.main.temp_min)}
+        maxTemp={formatKelvinToDegrees(element.main.temp_max)}
+        minTemp={formatKelvinToDegrees(element.main.temp_min)}
         description={element.weather[0].description}
         tempID={element.weather[0].id}
       />

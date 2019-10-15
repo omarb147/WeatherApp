@@ -1,27 +1,29 @@
 import * as TYPES from "../../Constants/Types";
 import { getWeatherAPI } from "../../services/weatherApi";
 import { autocompleteAPI } from "../../services/LocationAPI";
-import { formatDailyWeatherData, formatHourlyWeatherData, formatSuggestionData } from "../../utilities";
+import { imageSearchAPI } from "../../services/ImageApi";
+import { formatDailyWeatherData, formatHourlyWeatherData, formatSuggestionData, formatImageSearchData } from "../../utilities";
 
 //WEATHER API ACTIONS
 export const getWeatherByLocation = (location, period) => {
-  return async dispatch => {
+  return dispatch => {
     dispatch(getWeatherByLocationLoading(period));
+    setTimeout(async () => {
+      await getWeatherAPI(location, period, (res, error) => {
+        if (error) {
+          return dispatch(getWeatherByLocationError(period));
+        }
+        //TODO: DATA MANIPULATION ON RESUTLT
+        let data;
 
-    await getWeatherAPI(location, period, (res, error) => {
-      if (error) {
-        return dispatch(getWeatherByLocationError(period));
-      }
-      //TODO: DATA MANIPULATION ON RESUTLT
-      let data;
-
-      if (period === TYPES.DAILY) {
-        data = formatDailyWeatherData(res);
-      } else {
-        data = formatHourlyWeatherData(res);
-      }
-      return dispatch(getWeatherByLocationComplete(period, data));
-    });
+        if (period === TYPES.DAILY) {
+          data = formatDailyWeatherData(res);
+        } else {
+          data = formatHourlyWeatherData(res);
+        }
+        return dispatch(getWeatherByLocationComplete(period, data));
+      });
+    }, 300);
   };
 };
 
@@ -68,3 +70,26 @@ export const getAutocompleteSuggestionsError = error => {
 };
 
 export const getAutocompleteNullSearch = () => ({ type: TYPES.GET_AUTOCOMPLETE_NULL_SEARCH });
+
+//IMAGE SEARCH ACTIONS
+export const getImageForForecast = query => {
+  return async dispatch => {
+    dispatch(getImageForForecastLoading());
+
+    const res = await imageSearchAPI(query, (results, error) => {
+      if (error) return dispatch(getImageForForecastError(error));
+
+      //FORMAT RESULTS
+      const data = formatImageSearchData(results);
+      return dispatch({ type: TYPES.GET_IMAGE_FOR_FORECAST_COMPLETE, data });
+    });
+  };
+};
+
+export const getImageForForecastLoading = () => {
+  return { type: TYPES.GET_IMAGE_FOR_FORECAST_LOADING };
+};
+
+export const getImageForForecastError = error => {
+  return { types: TYPES.GET_IMAGE_FOR_FORECAST_ERROR, error };
+};

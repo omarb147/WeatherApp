@@ -1,80 +1,45 @@
-import React, { Component } from "react";
-import { Search } from "semantic-ui-react";
 import _ from "lodash";
+import React, { Component } from "react";
+import { Search, Grid, Header, Segment } from "semantic-ui-react";
+import { withRedux } from "../../Redux";
+import * as TYPES from "../../Constants/Types";
 
-const initialState = { inputValue: "", results: [], isLoading: false };
-
-//TODO GET all Cities and countries
-const options = {
-  "United Kingdom": {
-    name: "United Kingdom",
-    results: [
-      { title: "London" },
-      { title: "Manchester" },
-      { title: "Liverpool" }
-    ]
-  },
-  France: {
-    name: "France",
-    results: [{ title: "Lyon" }, { title: "Paris" }, { title: "Lille" }]
-  }
-};
+const initialState = { isLoading: false, value: "", results: [] };
 
 class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-  }
+  state = initialState;
 
-  onInputChange = (event, { value }) => {
-    this.setState({ isLoading: true, inputValue: value });
+  handleResultSelect = (e, { result }) => {
+    const { district, country_code, description } = result;
+    this.setState({ value: description });
+    this.props.getWeatherByLocation({ district, country_code }, TYPES.DAILY);
+  };
 
-    setTimeout(() => {
-      if (this.state.inputValue.length < 1) return this.setState(initialState);
-
-      //TODO sort filtering
-      const filteredList = options.filter(element =>
-        element.title
-          .toLowerCase()
-          .includes(this.state.inputValue.toLowerCase())
-      );
-
-      this.setState({ isLoading: false, results: filteredList });
-
-      console.log(this.state.results);
-    }, 300);
+  handleSearchChange = (e, { value }) => {
+    this.setState({ value });
+    this.props.getSearchSuggestions(value);
   };
 
   render() {
-    const { inputValue, results, isLoading } = this.state;
+    const { value, results } = this.state;
+    const { data } = this.props.searchSuggestions;
 
     return (
-      <div>
-        <Search
-          isLoading={isLoading}
-          onSearchChange={_.debounce(this.onInputChange, 50)}
-          value={inputValue}
-          results={results}
-        />
-
-        <form
-          className="ui form segment"
-          onSubmit={event => {
-            this.props.onInputSubmit(event, this.state.inputValue);
-          }}
-        >
-          <div className="field">
-            <label>User Input</label>
-            <input
-              type="text"
-              onChange={event => this.onInputChange(event)}
-              // value={this.state.inputValue}
-            />
-          </div>
-        </form>
-      </div>
+      <Search
+        category
+        input={{ fluid: true }}
+        loading={this.props.searchSuggestions.loading}
+        onResultSelect={this.handleResultSelect}
+        onSearchChange={_.debounce(this.handleSearchChange, 500, {
+          leading: true
+        })}
+        minCharacters={4}
+        results={data}
+        value={value}
+        fluid
+      />
     );
   }
 }
 
-export default SearchBar;
+export default withRedux(SearchBar);

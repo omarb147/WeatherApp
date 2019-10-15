@@ -9,6 +9,7 @@ export const autocompleteAPI = async (query, callback) => {
       params: {
         app_id: CONFIG.DEVELOPER_HERE_APP_ID,
         app_code: CONFIG.DEVELOPER_HERE_APP_CODE,
+        resultType: "areas",
         maxresults: 10
       }
     });
