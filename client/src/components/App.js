@@ -5,12 +5,10 @@ import "../weather-icons-master/css/weather-icons.css";
 import SearchExampleCategory from "./Search/SearchBar";
 import Layout from "./Layout";
 import { convertISOCode } from "../utilities/convertIsoCode";
-import { autocompleteAPI_2 } from "../services/LocationAPI";
 
 class App extends Component {
   componentDidMount() {
     convertISOCode("JAM");
-    autocompleteAPI_2("cro");
   }
 
   render() {

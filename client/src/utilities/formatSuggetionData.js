@@ -1,36 +1,34 @@
 export const formatSuggestionData = rawData => {
   //SIMPLIFY THIS CODE
-  const results = rawData
-    .map(location => mapLocationDetails(location))
-    .filter(location => location.district)
-    .reduce((unique, current) => {
-      if (unique.some(location => location.city == current.city)) {
-        return unique;
-      } else {
-        return [...unique, current];
-      }
-    }, []);
-
+  const results = rawData.map(location => mapLocationDetails(location));
+  // .filter(location => location.is_city);
+  // .reduce((unique, current) => {
+  //   if (unique.some(location => location.city == current.city)) {
+  //     return unique;
+  //   } else {
+  //     return [...unique, current];
+  //   }
+  // }, []);
   const data = mapLocationsToCountry(results);
   return data;
 };
 
 const mapLocationDetails = location => {
-  const { address, locationId, label, countryCode } = location;
-
-  const splitLabel = label.split(",");
-  const splitLabelLength = splitLabel.length;
-  const labelArr = splitLabel.slice(1, splitLabelLength).join(",");
-
+  const { country_code, country, is_city, locale_names, _geoloc, _highlightResult, objectID, administrative } = location;
+  // const { address, locationId, label, countryCode} = location;
+  const district = administrative.join(" ,");
+  const country_desc = country.en || country.default;
+  const title = locale_names.default[0];
+  const label = [title, district, country_desc].join(" ,");
   return {
-    title: address.district,
+    title,
+    description: district,
     label,
-    description: labelArr,
-    country: address.country,
-    country_code: countryCode,
-    district: address.district,
-    city: address.city,
-    key: locationId
+    is_city,
+    country: country_desc,
+    country_code: country_code,
+    loc: { lat: _geoloc.lat, lon: _geoloc.lng },
+    key: objectID
   };
 };
 
