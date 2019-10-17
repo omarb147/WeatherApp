@@ -76,12 +76,13 @@ export const getImageForForecast = query => {
   return async dispatch => {
     dispatch(getImageForForecastLoading());
 
-    const res = await imageSearchAPI(query, (results, error) => {
+    await imageSearchAPI(query, (results, error) => {
       if (error) return dispatch(getImageForForecastError(error));
 
       //FORMAT RESULTS
       const data = formatImageSearchData(results);
-      return dispatch({ type: TYPES.GET_IMAGE_FOR_FORECAST_COMPLETE, data });
+      const normalisedQuery = query.split(" ").join("_");
+      return dispatch({ type: TYPES.GET_IMAGE_FOR_FORECAST_COMPLETE, data, query: normalisedQuery });
     });
   };
 };
@@ -91,5 +92,10 @@ export const getImageForForecastLoading = () => {
 };
 
 export const getImageForForecastError = error => {
-  return { types: TYPES.GET_IMAGE_FOR_FORECAST_ERROR, error };
+  return { type: TYPES.GET_IMAGE_FOR_FORECAST_ERROR, error };
+};
+
+//SELECTION OF FORECAST
+export const selectForecast = forecast => {
+  return { type: TYPES.SELECT_FORECAST, forecast };
 };

@@ -24,6 +24,7 @@ const mapLocationDetails = location => {
 
   return {
     title: address.district,
+    label,
     description: labelArr,
     country: address.country,
     country_code: countryCode,

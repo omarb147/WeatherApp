@@ -10,6 +10,7 @@ export const formatDailyWeatherData = data => {
     .map(forecast => {
       const { dt, temp, weather } = forecast;
       const weatherDetails = weather[0];
+      const desc_key = weatherDetails.description.split(" ").join("_");
 
       return {
         date: dt,
@@ -17,6 +18,7 @@ export const formatDailyWeatherData = data => {
         maxTemp: formatKelvinToDegrees(temp.max),
         temp: formatKelvinToDegrees(temp.day),
         description: weatherDetails.description,
+        desc_key,
         icon: weatherDetails.icon,
         short_desc: weatherDetails.main,
         wid: weatherDetails.id

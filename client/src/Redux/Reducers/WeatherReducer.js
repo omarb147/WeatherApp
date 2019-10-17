@@ -32,9 +32,9 @@ const weatherAPIReducer = (state = initalState, action) => {
     case TYPES.GET_WEATHER_BY_LOCATION_ERROR:
       switch (action.period) {
         case TYPES.DAILY:
-          return { ...state, daily: { loading: false, data: action.error, error: true } };
+          return { ...state, daily: { loading: false, data: [], error: action.error } };
         case TYPES.HOURLY:
-          return { ...state, hourly: { loading: false, data: action.error, error: true } };
+          return { ...state, hourly: { loading: false, data: [], error: action.error } };
       }
     case TYPES.GET_WEATHER_BY_LOCATION_LOADING:
       switch (action.period) {
@@ -43,6 +43,9 @@ const weatherAPIReducer = (state = initalState, action) => {
         case TYPES.HOURLY:
           return { ...state, hourly: { loading: true, data: [], error: false } };
       }
+    case TYPES.GET_AUTOCOMPLETE_NULL_SEARCH: {
+      return initalState;
+    }
   }
   return state;
 };

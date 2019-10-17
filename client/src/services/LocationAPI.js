@@ -18,3 +18,17 @@ export const autocompleteAPI = async (query, callback) => {
     return callback(null, error);
   }
 };
+
+export const autocompleteAPI_2 = async query => {
+  const escapedQuery = query.split(" ").join("+");
+
+  try {
+    const res = await axios.get(`${CONFIG.AGOLIA_SEARCH_BASE_URL}?`, {
+      params: { query, type: "city", hitsPerPage: 10 },
+      headers: { ["X-Algolia-Application-Id"]: CONFIG.AGOLIA_SEARCH_APP_ID, "X-Algolia-API-Key": CONFIG.AGOLIA_SEARCH_API_KEY }
+    });
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};

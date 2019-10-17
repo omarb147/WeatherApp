@@ -10,9 +10,9 @@ class SearchBar extends Component {
   state = initialState;
 
   handleResultSelect = (e, { result }) => {
-    const { district, country_code, description } = result;
-    this.setState({ value: description });
-    this.props.getWeatherByLocation({ district, country_code }, TYPES.DAILY);
+    const { district, country_code, label, city } = result;
+    this.setState({ value: label });
+    this.props.getWeatherByLocation({ district, country_code, city }, TYPES.DAILY);
   };
 
   handleSearchChange = (e, { value }) => {

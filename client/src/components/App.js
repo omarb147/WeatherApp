@@ -3,22 +3,28 @@ import { withRedux } from "../Redux";
 import WeatherDisplay from "./Weather/WeatherDisplay";
 import "../weather-icons-master/css/weather-icons.css";
 import SearchExampleCategory from "./Search/SearchBar";
-import { imageSearchAPI } from "../services/ImageApi";
+import Layout from "./Layout";
+import { convertISOCode } from "../utilities/convertIsoCode";
+import { autocompleteAPI_2 } from "../services/LocationAPI";
 
 class App extends Component {
   componentDidMount() {
-    imageSearchAPI("light rain", null);
+    convertISOCode("JAM");
+    autocompleteAPI_2("cro");
   }
+
   render() {
     return (
-      <div className="ui container">
-        <div className="ui segment">
-          <SearchExampleCategory />
+      <Layout>
+        <div className="ui container">
+          <div className="ui segment">
+            <SearchExampleCategory />
+          </div>
+          <div>
+            <WeatherDisplay />
+          </div>
         </div>
-        <div>
-          <WeatherDisplay />
-        </div>
-      </div>
+      </Layout>
     );
   }
 }
