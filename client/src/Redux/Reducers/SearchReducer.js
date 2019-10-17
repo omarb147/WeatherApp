@@ -6,9 +6,7 @@ const initalState = {
     loading: false,
     error: null
   },
-  selectedLocation: {
-    city: ""
-  }
+  selectedLocation: null
 };
 
 const searchReducer = (state = initalState, action) => {
@@ -24,6 +22,9 @@ const searchReducer = (state = initalState, action) => {
     }
     case TYPES.GET_AUTOCOMPLETE_NULL_SEARCH: {
       return { ...state, suggestions: initalState.suggestions };
+    }
+    case TYPES.SELECT_LOCATION: {
+      return { ...state, selectedLocation: action.location };
     }
   }
   return state;

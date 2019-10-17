@@ -10,7 +10,18 @@ class SearchBar extends Component {
   state = initialState;
 
   handleResultSelect = (e, { result }) => {
-    const { loc, label, city } = result;
+    const { images, getImageForForecast } = this.props;
+    const { loc, label, location_key, title, country } = result;
+    //SEPERATE THESE FUNCTIONS!!!
+    this.props.selectLocation(result);
+    const locationQuery = `${title}, ${country}`;
+    console.log(location_key);
+
+    if (!images[location_key]) {
+      console.log(location_key);
+      getImageForForecast(locationQuery, location_key);
+    }
+
     this.setState({ value: label });
     this.props.getWeatherByLocation(loc, TYPES.DAILY);
   };

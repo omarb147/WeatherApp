@@ -4,12 +4,7 @@ import { withRedux } from "../../Redux";
 
 class WeatherDisplay extends React.Component {
   onForecastSelect = (e, forecast) => {
-    const { getImageForForecast, selectForecast, images } = this.props;
-    console.log(forecast);
-
-    if (!images[forecast.desc_key]) {
-      getImageForForecast(forecast.description);
-    }
+    const { getImageForForecast, selectForecast } = this.props;
 
     selectForecast(forecast);
 
@@ -19,7 +14,7 @@ class WeatherDisplay extends React.Component {
   };
 
   render() {
-    const { city, country, dailyForecast, selectedForecast } = this.props;
+    const { selectedLocation, city, country, dailyForecast, selectedForecast } = this.props;
 
     if (!selectedForecast && dailyForecast.data.length > 0) this.onForecastSelect(null, dailyForecast.data[0]);
 
@@ -28,7 +23,7 @@ class WeatherDisplay extends React.Component {
         {city && (
           <div className="ui segment">
             <h1>
-              Weather for {city},{country}
+              Weather for {selectedLocation.title}, {selectedLocation.country}
             </h1>
           </div>
         )}

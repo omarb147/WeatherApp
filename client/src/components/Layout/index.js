@@ -8,15 +8,20 @@ export class Layout extends Component {
     const imageNumber = Math.round(Math.random() * 9);
     this.setState({ imageNumber });
   }
+  normalisedString = str => str.split(" ").join("_");
 
   selectBackgroundImage = () => {
-    const { selectedForecast, images } = this.props;
+    const { dailyForecast, selectedLocation, images, getImageForForecast } = this.props;
     const { imageNumber } = this.state;
 
     let backgroundImage = "";
 
-    if (selectedForecast) {
-      const imagesForKey = images[selectedForecast.desc_key];
+    if (dailyForecast.data.length > 0 && selectedLocation) {
+      const { location_key } = selectedLocation;
+
+      const imagesForKey = images[location_key];
+      console.log(images);
+
       backgroundImage = imagesForKey ? `url(${imagesForKey[imageNumber].url})` : "";
     }
 

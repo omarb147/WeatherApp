@@ -71,8 +71,12 @@ export const getAutocompleteSuggestionsError = error => {
 
 export const getAutocompleteNullSearch = () => ({ type: TYPES.GET_AUTOCOMPLETE_NULL_SEARCH });
 
+export const selectLocation = location => {
+  return { type: TYPES.SELECT_LOCATION, location };
+};
+
 //IMAGE SEARCH ACTIONS
-export const getImageForForecast = query => {
+export const getImageForForecast = (query, key) => {
   return async dispatch => {
     dispatch(getImageForForecastLoading());
 
@@ -81,8 +85,8 @@ export const getImageForForecast = query => {
 
       //FORMAT RESULTS
       const data = formatImageSearchData(results);
-      const normalisedQuery = query.split(" ").join("_");
-      return dispatch({ type: TYPES.GET_IMAGE_FOR_FORECAST_COMPLETE, data, query: normalisedQuery });
+
+      return dispatch({ type: TYPES.GET_IMAGE_FOR_FORECAST_COMPLETE, data, key });
     });
   };
 };

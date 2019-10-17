@@ -13,6 +13,8 @@ export const formatSuggestionData = rawData => {
   return data;
 };
 
+const normaliseValue = val => val.split(" ").join("_");
+
 const mapLocationDetails = location => {
   const { country_code, country, is_city, locale_names, _geoloc, _highlightResult, objectID, administrative } = location;
   // const { address, locationId, label, countryCode} = location;
@@ -20,6 +22,12 @@ const mapLocationDetails = location => {
   const country_desc = country.en || country.default;
   const title = locale_names.default[0];
   const label = [title, district, country_desc].join(" ,");
+
+  // const normTitle = normaliseValue(title);
+  // const normCountry = normaliseValue(country_desc);
+
+  const location_key = `${title}_${country_desc}`.split(" ").join("_");
+
   return {
     title,
     description: district,
@@ -28,7 +36,8 @@ const mapLocationDetails = location => {
     country: country_desc,
     country_code: country_code,
     loc: { lat: _geoloc.lat, lon: _geoloc.lng },
-    key: objectID
+    key: objectID,
+    location_key
   };
 };
 
