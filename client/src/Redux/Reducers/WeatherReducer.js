@@ -12,7 +12,8 @@ const initalState = {
     Loading: false,
     data: [],
     error: null
-  }
+  },
+  units: TYPES.CELCIUS
 };
 
 const weatherAPIReducer = (state = initalState, action) => {
@@ -27,7 +28,7 @@ const weatherAPIReducer = (state = initalState, action) => {
             daily: { loading: false, data: [...action.data.forecast], error: null }
           };
         case TYPES.HOURLY:
-          return { ...state, hourly: { loading: false, data: [...action.data.forecast], error: null } };
+          return { ...state, hourly: { loading: false, data: [...action.data], error: null } };
       }
     case TYPES.GET_WEATHER_BY_LOCATION_ERROR:
       switch (action.period) {
@@ -45,6 +46,16 @@ const weatherAPIReducer = (state = initalState, action) => {
       }
     case TYPES.GET_AUTOCOMPLETE_NULL_SEARCH: {
       return initalState;
+    }
+    case TYPES.SWITCH_FORECAST_UNITS: {
+      //FIND ANOTHER WAY TO DO THIS!
+
+      return {
+        ...state,
+        units: action.units,
+        daily: { ...state.daily, data: action.data.dailyData },
+        hourly: { ...state.hourly, data: action.data.hourlyData }
+      };
     }
   }
   return state;

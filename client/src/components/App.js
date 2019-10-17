@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { withRedux } from "../Redux";
+
 import WeatherDisplay from "./Weather/WeatherDisplay";
-import "../weather-icons-master/css/weather-icons.css";
+import WeatherTable from "./WeatherTable";
 import SearchExampleCategory from "./Search/SearchBar";
 import Layout from "./Layout";
-import { convertISOCode } from "../utilities/convertIsoCode";
+
+import "../weather-icons-master/css/weather-icons.css";
+import SuggestionsBar from "./SuggestionsBar";
 
 class App extends Component {
-  componentDidMount() {
-    convertISOCode("JAM");
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -17,9 +18,11 @@ class App extends Component {
         <div className="ui container">
           <div className="ui segment">
             <SearchExampleCategory />
+            <SuggestionsBar />
           </div>
           <div>
             <WeatherDisplay />
+            <WeatherTable />
           </div>
         </div>
       </Layout>

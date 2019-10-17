@@ -6,7 +6,8 @@ const initalState = {
     loading: false,
     error: null
   },
-  selectedLocation: null
+  selectedLocation: null,
+  searchQuery: ""
 };
 
 const searchReducer = (state = initalState, action) => {
@@ -25,6 +26,9 @@ const searchReducer = (state = initalState, action) => {
     }
     case TYPES.SELECT_LOCATION: {
       return { ...state, selectedLocation: action.location };
+    }
+    case TYPES.EDIT_SEARCH_QUERY: {
+      return { ...state, searchQuery: action.query };
     }
   }
   return state;

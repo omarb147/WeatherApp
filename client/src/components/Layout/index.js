@@ -20,7 +20,6 @@ export class Layout extends Component {
       const { location_key } = selectedLocation;
 
       const imagesForKey = images[location_key];
-      console.log(images);
 
       backgroundImage = imagesForKey ? `url(${imagesForKey[imageNumber].url})` : "";
     }
@@ -30,7 +29,7 @@ export class Layout extends Component {
 
   render() {
     const image = this.selectBackgroundImage();
-    return <div style={{ backgroundImage: image, backgroundSize: "cover", height: "100vh" }}>{this.props.children}</div>;
+    return <div style={{ backgroundImage: image, backgroundSize: "cover", height: "120vh" }}>{this.props.children}</div>;
   }
 }
 

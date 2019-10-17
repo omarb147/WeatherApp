@@ -21,9 +21,11 @@ const mapStateToProps = state => {
     dailyForecast: state.weatherAPI.daily,
     hourlyForecast: state.weatherAPI.hourly,
     searchSuggestions: state.search.suggestions,
+    searchQuery: state.search.searchQuery,
     selectedLocation: state.search.selectedLocation,
     images: state.images,
-    selectedForecast: state.selectedForecast
+    selectedForecast: state.selectedForecast,
+    forecastUnits: state.weatherAPI.units
   };
 };
 
@@ -33,7 +35,9 @@ const mapDispatchToProps = dispatch => {
     getSearchSuggestions: query => dispatch(ACTION.getAutocompleteSuggestions(query)),
     getImageForForecast: (query, key) => dispatch(ACTION.getImageForForecast(query, key)),
     selectForecast: forecast => dispatch(ACTION.selectForecast(forecast)),
-    selectLocation: location => dispatch(ACTION.selectLocation(location))
+    selectLocation: location => dispatch(ACTION.selectLocation(location)),
+    editSearchQuery: query => dispatch(ACTION.editSearchQuery(query)),
+    switchForecastUnits: (units, forecasts) => dispatch(ACTION.switchForecastUnits(units, forecasts))
   };
 };
 

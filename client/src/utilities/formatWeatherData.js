@@ -1,4 +1,5 @@
 import { formatKelvinToDegrees } from "./formatUnits";
+import moment from "moment";
 
 const TOTAL_FORECASTS = 5;
 
@@ -14,6 +15,7 @@ export const formatDailyWeatherData = data => {
 
       return {
         date: dt,
+        day: moment.unix(dt).format("MMM Do"),
         minTemp: formatKelvinToDegrees(temp.min),
         maxTemp: formatKelvinToDegrees(temp.max),
         temp: formatKelvinToDegrees(temp.day),
@@ -34,10 +36,18 @@ export const formatHourlyWeatherData = data => {
     const { dt, main, weather } = forecast;
     const weatherDetails = weather[0];
 
+    const time = moment.unix(dt);
+    const timeFrom = moment(time).format("HH:mm");
+    const timeTo = moment(time)
+      .add(3, "hours")
+      .format("HH:mm");
+
     return {
-      date: dt,
-      minTemp: main.temp_min,
-      maxTemp: main.temp_max,
+      day: moment.unix(dt).format("MMM Do"),
+      timeFrom,
+      timeTo,
+      minTemp: formatKelvinToDegrees(main.temp_min),
+      maxTemp: formatKelvinToDegrees(main.temp_max),
       temp: main.temp,
       description: weatherDetails.description,
       icon: weatherDetails.icon,

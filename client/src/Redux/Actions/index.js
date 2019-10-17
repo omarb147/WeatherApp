@@ -3,6 +3,7 @@ import { getWeatherAPI } from "../../services/weatherApi";
 import { autocompleteAPI } from "../../services/LocationAPI";
 import { imageSearchAPI } from "../../services/ImageApi";
 import { formatDailyWeatherData, formatHourlyWeatherData, formatSuggestionData, formatImageSearchData } from "../../utilities";
+import { changeForecastUnits } from "../../utilities/formatUnits";
 
 //WEATHER API ACTIONS
 export const getWeatherByLocation = (location, period) => {
@@ -102,4 +103,19 @@ export const getImageForForecastError = error => {
 //SELECTION OF FORECAST
 export const selectForecast = forecast => {
   return { type: TYPES.SELECT_FORECAST, forecast };
+};
+
+//SEARCH BAR QUERY
+export const editSearchQuery = query => {
+  return { type: TYPES.EDIT_SEARCH_QUERY, query };
+};
+
+//SWITCH UNITS
+export const switchForecastUnits = (units, forecasts) => {
+  const data = {
+    dailyData: changeForecastUnits(forecasts.dailyData, units),
+    hourlyData: changeForecastUnits(forecasts.hourlyData, units)
+  };
+
+  return { type: TYPES.SWITCH_FORECAST_UNITS, units, data };
 };
