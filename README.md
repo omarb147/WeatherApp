@@ -16,7 +16,7 @@
 To run the application locally; clone the repo install dependecies and get unique keys for the Aloglia Search, Unsplash and Open Weather Map APIs
 
 ```
-$ git clone https://github.com/obello147/WeatherApp
+$ git clone https://github.com/omarb147/WeatherApp
 $ cd client
 $ npm install && npm start
 ```
