@@ -8,6 +8,7 @@ import Layout from "./Layout";
 
 import "../weather-icons-master/css/weather-icons.css";
 import SuggestionsBar from "./SuggestionsBar";
+import LogoIcon from "./LogoIcon";
 
 class App extends Component {
   componentDidMount() {}
@@ -15,6 +16,7 @@ class App extends Component {
   render() {
     return (
       <Layout>
+        <LogoIcon />
         <div className="ui container">
           <div className="ui segment">
             <SearchExampleCategory />

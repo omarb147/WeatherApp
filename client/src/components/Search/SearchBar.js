@@ -30,6 +30,7 @@ class SearchBar extends Component {
         onSearchChange={_.debounce(this.handleSearchChange, 500, {
           leading: true
         })}
+        placeholder="Enter a city to search for weather forecast..."
         minCharacters={4}
         results={data}
         value={searchQuery}
