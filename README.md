@@ -2,5 +2,5 @@
 >Weather app developed using React and Redux
 
 ## Demo
-![WeatherAppDemo](weatherAppMain.gif)
+![WeatherAppDemo](weatherAppMain.gif| width=100%)
 
