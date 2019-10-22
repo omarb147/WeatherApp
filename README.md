@@ -11,6 +11,13 @@
 * Random image background shown with relevance to location (using Unsplash API)
 * Previously search locations stored in cookies - most searched location will be displayed when returning to app.
 
+## Tools
+* React 
+* Redux, React-redux & Redux-Thunk
+* Axios
+* Semantic-ui-react 
+* MomentJS
+* Styled-Components
 
 ## Usage
 To run the application locally; clone the repo install dependecies and get unique keys for the Aloglia Search, Unsplash and Open Weather Map APIs
